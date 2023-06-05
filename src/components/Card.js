@@ -1,12 +1,21 @@
 function Card({ card, onCardClick }) {
-    function handleClick() {
-      onCardClick(card)
-    }
-  
-    return (
-      <li className="elements__card">
-      <img src={card.link} class="elements__image" alt={card.name} onClick={handleClick} />
-      <button className="elements__trash" type="button" aria-label="Удалить"></button>
+  function handleClick() {
+    onCardClick(card);
+  }
+
+  return (
+    <li className="elements__card">
+      <img
+        src={card.link}
+        class="elements__image"
+        alt={card.name}
+        onClick={handleClick}
+      />
+      <button
+        className="elements__trash"
+        type="button"
+        aria-label="Удалить"
+      ></button>
       <div className="elements__title-wrapper">
         <h2 className="elements__title">{card.name}</h2>
         <div className="elements__like-wrapper">
@@ -19,7 +28,7 @@ function Card({ card, onCardClick }) {
         </div>
       </div>
     </li>
-    )
-  }
-  
-  export default Card;
+  );
+}
+
+export default Card;
