@@ -1,4 +1,14 @@
+import React from 'react';
+
 function ImagePopup({ card, onClose }) {
+
+  React.useEffect(() => {
+    document.addEventListener('keydown', onClose);
+      return () => {
+        document.removeEventListener('keydown', onClose);
+      }
+  }, []);
+
     return (
       <div className={`popup popup_zoom-image ${card.isOpen ? 'popup_opened' : ''}`}>
         <div className="popup__figure-container popup__overlay">

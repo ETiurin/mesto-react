@@ -41,9 +41,9 @@ function App() {
       <Footer />
       {isEditProfilePopupOpen &&
         <PopupWithForm name={'edit'} title={'Редактировать профиль'} isOpen={true} onClose={closeAllPopups} buttonText={'Сохранить'}>
-          <input className="popup__input popup__input_type_name popup__input_type_name-profile" name="user_name" id="name-input" type="text" placeholder="Имя" value=" " minlength="2" maxlength="40" required />
+          <input className="popup__input popup__input_type_name popup__input_type_name-profile" name="user_name" id="name-input" type="text" placeholder="Имя" value="" minlength="2" maxlength="40" required />
           <span className="popup__span popup__span_error name-input-error"></span>
-          <input className="popup__input popup__input_type_about popup__input_type_about-profile" name="user_about" id="about-input" type="text" placeholder="О cебе" value=" " minlength="2" maxlength="200" required />
+          <input className="popup__input popup__input_type_about popup__input_type_about-profile" name="user_about" id="about-input" type="text" placeholder="О cебе" value="" minlength="2" maxlength="200" required />
           <span className="popup__span popup__span_error about-input-error"></span>
         </PopupWithForm>
       }
