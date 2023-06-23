@@ -1,6 +1,14 @@
-function PopupWithForm({ name, title, children, isOpen, onClose, buttonText }) {
+function PopupWithForm({
+  name,
+  title,
+  children,
+  isOpen,
+  onClose,
+  buttonText,
+  onSubmit,
+}) {
   return (
-    <div className={`popup popup-${name} ${isOpen ? 'popup_opened' : ''}`}>
+    <div className={`popup popup-${name} ${isOpen ? "popup_opened" : ""}`}>
       <div className="popup__container popup__container_type_delete-card">
         <button
           className="popup__close"
@@ -13,7 +21,8 @@ function PopupWithForm({ name, title, children, isOpen, onClose, buttonText }) {
           className="popup__form popup__form_type_avatar"
           name={name}
           id={`popup-form-${name}`}
-          novalidate
+          onSubmit={onSubmit}
+          noValidate
         >
           {children}
           <button
