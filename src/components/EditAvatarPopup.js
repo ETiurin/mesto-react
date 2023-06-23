@@ -2,17 +2,21 @@ import React, { useState } from "react";
 import PopupWithForm from "./PopupWithForm";
 
 function EditAvaterPopup({ isOpen, onClose, onUpdateAvatar }) {
-  const [avatar, setAvatar] = useState("");
+  const avatarRef = React.useRef(null);
 
-  function handleChangeAvatar(e) {
-    setAvatar(e.target.value);
+  React.useEffect(() => {
+    avatarRef.current.value = "";
+  }, [isOpen]);
+
+  function handleChangeAvatar() {
+    return avatarRef.current.value;
   }
 
   function handleSubmit(e) {
     e.preventDefault();
 
     onUpdateAvatar({
-      avatar,
+      avatar: avatarRef.current.value,
     });
   }
 
@@ -33,9 +37,10 @@ function EditAvaterPopup({ isOpen, onClose, onUpdateAvatar }) {
         name="input-avatar-link"
         value={avatar}
         onChange={handleChangeAvatar}
+        ref={avatarRef}
         required
       />
-      <span className="input-avatar-link-error"></span>
+      <span className="input-avatar-link-error" />
     </PopupWithForm>
   );
 }

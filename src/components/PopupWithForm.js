@@ -22,7 +22,6 @@ function PopupWithForm({
           name={name}
           id={`popup-form-${name}`}
           onSubmit={onSubmit}
-          noValidate
         >
           {children}
           <button

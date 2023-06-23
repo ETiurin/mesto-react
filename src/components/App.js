@@ -38,6 +38,9 @@ function App() {
         userName: userData.name,
         userDescription: userData.about,
         userAvatar: userData.avatar,
+      })
+      .catch((err) => {
+        console.error(err);
       });
     });
   }, []);
