@@ -1,70 +1,38 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React, { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import LoginForm from "./LoginForm";
 
-const Register = ({ handleRegister }) => {
-  const [email, setEmail] = React.useState("");
-  const [password, setPassword] = React.useState("");
+import authApi from '../utils/AuthApi';
 
-  const handleEmailChange = (evt) => {
-    setEmail(evt.target.value);
-  };
+const Register = ({ setPopupFailed, setPopupSucceeded }) => {
+  const navigate = useNavigate();
 
-  const handlePasswordChange = (evt) => {
-    setPassword(evt.target.value);
-  };
-
-  const handleSubmit = (evt) => {
-    evt.preventDefault();
-
-    handleRegister({
-      userEmail: email,
-      userPassword: password,
-    })
-      .then(() => {
-        setEmail("");
-        setPassword("");
-      })
-      .catch((err) => console.log(err));
-  };
+  function handleRegisterUser(email, password) {
+    return authApi
+        .signUp(email, password)
+        .then((data) => {
+          if (data) {
+              setPopupSucceeded(true);
+              navigate("/sign-in");
+          }
+        })
+        .catch((err) => {
+            setPopupFailed(true);
+          console.log(err);
+        })
+  }
 
   return (
-    <form
-      onSubmit={handleSubmit}
-      className="auth__form"
-      noValidate
-      name="register"
-    >
-      <h2 className="auth__title">Регистрация</h2>
-      <input
-        id="email"
-        name="email"
-        type="email"
-        placeholder="Email"
-        value={email}
-        className="auth__input"
-        onChange={handleEmailChange}
-        autoComplete="off"
-      />
-      <input
-        id="password"
-        name="password"
-        type="password"
-        placeholder="Пароль"
-        value={password}
-        className="auth__input"
-        onChange={handlePasswordChange}
-        autoComplete="off"
-      />
-      <button type="submit" className="auth__button">
-        Зарегистрироваться
-      </button>
+    <>
+      <LoginForm title="Регистрация" action="Зарегистрироваться" onSubmit={handleRegisterUser} />
       <div className="auth__signin">
         <Link to="/sign-in" className="auth__login-link">
           Уже зарегистрированы? Войти
         </Link>
       </div>
-    </form>
-  );
+    </>
+  )
+
 };
 
 export default Register;

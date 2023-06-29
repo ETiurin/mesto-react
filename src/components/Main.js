@@ -31,7 +31,7 @@ function Main({
               type="button"
               aria-label="Добавить"
               onClick={onEditProfile}
-            ></button>
+            />
           </div>
           <p className="profile__about">{userInfo.userDescription}</p>
         </div>
@@ -40,7 +40,7 @@ function Main({
           type="button"
           aria-label="Добавить"
           onClick={onAddPlace}
-        ></button>
+        />
       </section>
       <section className="elements-container">
         <ul className="elements">

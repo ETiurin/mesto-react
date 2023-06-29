@@ -1,61 +1,37 @@
 import React from "react";
+import LoginForm from "./LoginForm";
+import { useNavigate } from "react-router-dom";
+import authApi from "../utils/AuthApi";
 
-const Login = ({ handleLogin }) => {
-  const [email, setEmail] = React.useState("");
-  const [password, setPassword] = React.useState("");
+const Login = ({setLoggedIn, setUserData, setPopupFailed}) => {
+    const navigate = useNavigate();
 
-  const handleEmailChange = (evt) => {
-    setEmail(evt.target.value);
-  };
+    const handleLogin = (email, password) => {
+        return authApi
+            .signIn(email, password)
+            .then((data) => {
+                if (data.token) {
+                    localStorage.setItem('jwt', data.token);
+                    setLoggedIn(true);
+                    setUserData({
+                        userEmail: email,
+                    });
+                    navigate('/', {replace: true});
+                } else {
+                    setPopupFailed(true);
+                }
+            })
+            .catch(err => {
+                console.log(err);
+                setPopupFailed(true);
+            });
+    }
 
-  const handlePasswordChange = (evt) => {
-    setPassword(evt.target.value);
-  };
-
-  const handleSubmit = (evt) => {
-    evt.preventDefault();
-
-    handleLogin({
-      userEmail: email,
-      userPassword: password,
-    })
-      .then(() => {
-        setEmail("");
-        setPassword("");
-      })
-      .catch((err) => console.log(err));
-  };
-
-  return (
-    <div>
-      <form onSubmit={handleSubmit} className="auth__form" noValidate>
-        <h2 className="auth__title">Вход</h2>
-        <input
-          className="auth__input"
-          id="email"
-          name="email"
-          type="email"
-          placeholder="Email"
-          value={email}
-          onChange={handleEmailChange}
-          autoComplete="off"
-        />
-        <input
-          id="password"
-          name="password"
-          type="password"
-          placeholder="Пароль"
-          value={password}
-          className="auth__input"
-          onChange={handlePasswordChange}
-          autoComplete="off"
-        />
-        <button type="submit" className="auth__button">
-          Войти
-        </button>
-      </form>
-    </div>
-  );
+    return (
+        <>
+            <LoginForm title="Вход" action="Войти" onSubmit={handleLogin}/>
+        </>
+    );
 };
 
 export default Login;

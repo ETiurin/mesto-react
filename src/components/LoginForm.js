@@ -1,32 +1,57 @@
-import { useState }  from 'react';
+import React, { useState }  from 'react';
 
-const LoginForm = ({ title, onSubmit }) => {
-    const [formValue, setFormValue] = useState({
-        username: '',
-        password: ''
-    });
-    
-    const handleChange = (e) => {
-        const {name, value} = e.target;
+const LoginForm = ({ title, action, onSubmit }) => {
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
 
-        setFormValue({
-            ...formValue,
-            [name]: value
-        });
-    }
+    const handleEmailChange = (evt) => {
+        setEmail(evt.target.value);
+    };
+
+    const handlePasswordChange = (evt) => {
+        setPassword(evt.target.value);
+    };
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        onSubmit(formValue).then(() => {
-            setFormValue({
-                username: '',
-                password: ''
-            });
+        onSubmit(email, password).then(() => {
+            setEmail('');
+            setPassword('');
         });
     }
 
-    return(
-    <form onSubmit={handleSubmit}>form</form>
+    return (
+        <form
+            onSubmit={handleSubmit}
+            className="auth__form"
+            noValidate
+            name="register"
+        >
+            <h2 className="auth__title">{title}</h2>
+            <input
+                id="email"
+                name="email"
+                type="email"
+                placeholder="Email"
+                value={email}
+                className="auth__input"
+                onChange={handleEmailChange}
+                autoComplete="off"
+            />
+            <input
+                id="password"
+                name="password"
+                type="password"
+                placeholder="Пароль"
+                value={password}
+                className="auth__input"
+                onChange={handlePasswordChange}
+                autoComplete="off"
+            />
+            <button type="submit" className="auth__button">
+                {action}
+            </button>
+        </form>
     );
 }
 
