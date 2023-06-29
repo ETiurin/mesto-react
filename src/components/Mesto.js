@@ -73,13 +73,14 @@ function Mesto({ setCurrentUser }) {
     function handleUpdateUser(user) {
         api.editUserInfo(user).then((newUser) => {
             setCurrentUser((user) => ({
+                ...user,
                 _id: newUser._id,
                 userName: newUser.name,
                 userDescription: newUser.about,
                 userAvatar: newUser.avatar,
-            })).catch((error) => console.log(`Ошибка: ${error}`));
+            }))
             setIsEditProfilePopupOpen(false);
-        });
+        }).catch((error) => console.log(`Ошибка: ${error}`));
     }
 
     function handleAddPlaceSubmit(user) {
